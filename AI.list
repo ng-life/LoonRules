@@ -9,14 +9,6 @@ DOMAIN-SUFFIX,oaistatsig.com
 DOMAIN-SUFFIX,sora.com
 DOMAIN-KEYWORD,openai
 
-# Claude
-DOMAIN-SUFFIX,claude.ai
-DOMAIN-SUFFIX,intercomcdn.com
-DOMAIN-KEYWORD,claude
-DOMAIN-KEYWORD,anthropic
-# 待确认：原文粘连，无法确定 Fathom 域名，暂不启用。
-# 原文：DOMAIN,cdn.usefathom.DOMAIN-KEYWORD,anthropic,AIpic.com,AI
-
 # Grok
 DOMAIN-SUFFIX,grok.com
 DOMAIN-SUFFIX,x.ai

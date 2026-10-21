@@ -1,11 +1,14 @@
 # YJP
+
 IP-CIDR,10.244.0.0/16
 IP-CIDR,172.16.0.0/12
 IP-CIDR,197.168.24.0/24
 IP-CIDR,197.168.12.0/22
-DOMAIN,yapd.yijiupi.com
-DOMAIN,okr.yijiupi.com
+
 DOMAIN,se.yijiupi.com
+DOMAIN,okr.yijiupi.com
+DOMAIN,yapd.yijiupi.com
+DOMAIN-SUFFIX,tp.com
 DOMAIN-SUFFIX,yjp.com
 DOMAIN-SUFFIX,yijiupidev.com
 DOMAIN-SUFFIX,yijiupitest.com

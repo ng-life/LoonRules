@@ -1,6 +1,8 @@
 # DIRECT
-DOMAIN,nglife.myqnapcloud.com
+
 IP-CIDR,67.230.174.122/32
 DOMAIN-SUFFIX,infoscope.vip
+DOMAIN,nglife.myqnapcloud.com
+
 DOMAIN-SUFFIX,apple.com
 DOMAIN-SUFFIX,icloud.com
