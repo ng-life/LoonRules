@@ -1,0 +1,19 @@
+# Proxy
+DOMAIN,mask-api.fe.apple-dns.net
+DOMAIN,mask-api.icloud.com
+DOMAIN,mask-t.apple-dns.net
+DOMAIN,mask.apple-dns.net
+DOMAIN,mask-h2.icloud.com
+DOMAIN,mask.icloud.com
+DOMAIN,in.appcenter.ms
+DOMAIN-SUFFIX,cloudflare-dns.com
+DOMAIN-SUFFIX,v2ex.com
+DOMAIN-SUFFIX,github.com
+DOMAIN-SUFFIX,githubassets.com
+DOMAIN-SUFFIX,githubusercontent.com
+DOMAIN-SUFFIX,office.com
+DOMAIN-SUFFIX,etahub.com
+DOMAIN-SUFFIX,phncdn.com
+DOMAIN-SUFFIX,xbookcn.net
+DOMAIN-SUFFIX,io
+DOMAIN-SUFFIX,org

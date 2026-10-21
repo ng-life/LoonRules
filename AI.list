@@ -1,0 +1,49 @@
+# AI
+# ChatGPT
+DOMAIN-SUFFIX,chatgpt.com
+DOMAIN-SUFFIX,openai.com
+DOMAIN-SUFFIX,chat.com
+DOMAIN-SUFFIX,oaistatic.com
+DOMAIN-SUFFIX,oaiusercontent.com
+DOMAIN-SUFFIX,oaistatsig.com
+DOMAIN-SUFFIX,sora.com
+DOMAIN-KEYWORD,openai
+
+# Claude
+DOMAIN-SUFFIX,claude.ai
+DOMAIN-SUFFIX,intercomcdn.com
+DOMAIN-KEYWORD,claude
+DOMAIN-KEYWORD,anthropic
+# 待确认：原文粘连，无法确定 Fathom 域名，暂不启用。
+# 原文：DOMAIN,cdn.usefathom.DOMAIN-KEYWORD,anthropic,AIpic.com,AI
+
+# Grok
+DOMAIN-SUFFIX,grok.com
+DOMAIN-SUFFIX,x.ai
+DOMAIN-SUFFIX,dot.com
+DOMAIN-KEYWORD,xai
+
+# Gemini / Google AI Studio / MakerSuite
+DOMAIN-SUFFIX,gemini.google
+DOMAIN,ai.google.dev
+DOMAIN,makersuite.google.com
+DOMAIN-SUFFIX,deepmind.com
+DOMAIN-SUFFIX,deepmind.google
+DOMAIN-SUFFIX,generativelanguage.googleapis.com
+
+# 后端组件
+DOMAIN,alkalimakersuite-pa.clients6.google.com
+DOMAIN,alkalicore-pa.clients6.google.com
+DOMAIN,webchannel-alkalimakersuite-pa.clients6.google.com
+
+# NotebookLM
+DOMAIN-SUFFIX,notebooklm.google
+DOMAIN-SUFFIX,notebooklm.google.com
+
+# 谷歌静态资源
+DOMAIN-SUFFIX,gstatic.com
+
+# Perplexity
+DOMAIN-SUFFIX,perplexity.ai
+DOMAIN-SUFFIX,pplx.ai
+DOMAIN-KEYWORD,perplexity
