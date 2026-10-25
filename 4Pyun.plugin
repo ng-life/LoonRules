@@ -1,10 +1,13 @@
-#!name = 4Pyun 去广告
-#!desc = 屏蔽抓包确认的 4Pyun 广告投放接口
+#!name = PP 停车去广告
+#!desc = 将广告拉取请求模拟为合法的无广告响应
 #!author = ng-life
 #!homepage = https://github.com/ng-life/LoonRules
+#!loon_version = 3.5.1(983)
 #!date = 2026-10-25
 #!tag = 去广告
 
-[Rule]
-# 广告拉取及回执接口所在的专用广告域名
-DOMAIN,ad-api.4pyun.com,REJECT
+[Script]
+request if \${request.method} == "POST" && \${url} ~= /^https?:\\/\\/ad-api\\.4pyun\\.com\\/gate\\/1\\.0\\/adverting\\/advertising\\/pull(?:\\?.*)?$/i then script("https://raw.githubusercontent.com/ng-life/LoonRules/main/pp-parking-ad.js") with tag="PP 停车去广告", timeout=20
+
+[Mitm]
+hostname = ad-api.4pyun.com
