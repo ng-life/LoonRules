@@ -1,48 +1,48 @@
 ---
 name: loon-adblock-plugin
-description: Analyze captured mobile app traffic and create or troubleshoot Loon ad-blocking plugins using request or response scripts, local mock responses, and MitM rules. Use when building, updating, diagnosing, or publishing a Loon plugin that removes advertisements or promotional placements from an app.
+description: 分析移动应用抓包并制作、更新或排查 Loon 去广告插件，涵盖广告接口识别、Request/Response 脚本、本地模拟响应和 MitM 配置。适用于从抓包创建或发布 Loon 插件，以及诊断广告仍然出现的情况。
 ---
 
-# Build a Loon ad-blocking plugin
+# 制作 Loon 去广告插件
 
-## Workflow
+## 工作流程
 
-1. **Inspect the source material.** Review supplied HAR/ZIP captures, request and response headers, bodies, and any existing plugin or repository files. Locate ad-fetch APIs, ad configuration responses, media requests, and promotional-list endpoints. Map each candidate to its host, path, method, query pattern, status, content type, and response shape.
-2. **Separate ads from core behavior.** Confirm that a candidate is ad or promotion data. Keep authentication, payment, parking/charging actions, account state, entitlements, and unrelated business data intact. Prefer the narrowest endpoint and payload field that removes the requested placement.
-3. **Choose the interception phase deliberately.**
-   - Use a **request script mock** when the complete replacement response is known and the app can safely consume a static success response. It runs before the upstream request; `$done({response:{status,headers,body}})` returns the mock locally and skips the server request.
-   - Use a **response script** when fields other than the target must remain current or cannot be reconstructed safely. Parse the server JSON, change only the requested ad field, preserve the rest of the body and response metadata, and fall back to the original response if parsing or shape checks fail.
-   - Use a request rewrite or host block only when the app handles a missing response correctly. Avoid returning fabricated business errors unless captures show that exact response is accepted as a no-ad result.
-4. **Build the smallest valid mock or edit.** Base JSON structure and success codes on captured responses. For a local mock, provide a valid status and `Content-Type`; do not copy authorization, cookies, device identifiers, or other secrets into the returned payload. If the user asks to empty a field such as `payload.row`, change only that field. Explain that other values in a request mock are fixed sample values and cannot stay server-current because there is no upstream request.
-5. **Write the plugin rule.** Add a narrowly scoped method + URL condition under `[Script]`, point to the raw GitHub script URL, and use a clear tag and suitable timeout. Keep regex escaping consistent with Loon syntax. Add every intercepted HTTPS hostname to `[Mitm]`; HTTPS request interception requires Loon MitM certificate installation/trust and HTTPS decryption for those hosts.
-6. **Update documentation and repository files.** Describe which APIs are mocked or rewritten, what data is changed, any fixed mock metadata, and the MitM requirement. Keep script names and raw URLs consistent. When asked to publish, update the user's repository using the available GitHub integration, with a concise commit message.
-7. **Validate before reporting.** Check the plugin syntax, endpoint/method/host match, JSON validity, script completion path, and absence of copied credentials. Confirm the published files by fetching them back from the repository. Do not claim runtime validation in Loon unless it was actually performed.
+1. **检查输入材料。** 查看用户提供的 HAR/ZIP 抓包、请求和响应头、请求与响应体，以及已有插件或仓库文件。识别广告拉取接口、广告配置响应、广告媒体请求和推广列表接口，并记录各自的主机、路径、方法、查询参数形式、状态码、内容类型及响应结构。
+2. **区分广告与业务功能。** 确认目标数据确实属于广告或推广内容。保留认证、支付、停车/充电操作、账户状态、权益及其他无关业务数据。优先选择范围最窄的接口和字段来移除指定广告位。
+3. **选择合适的拦截阶段。**
+   - 当替代响应内容完整且已知，并且应用能够接受静态成功响应时，使用 **Request Script 模拟响应**。脚本在请求发出前运行；通过 `$done({response:{status,headers,body}})` 在本地返回响应，不访问上游服务。
+   - 当需要保留其他字段的实时值，或无法安全重建完整响应时，使用 **Response Script**。解析服务端 JSON，只修改目标广告字段，保留其余内容和响应元数据；解析失败或结构不符时放行原响应。
+   - 只有确认应用能正确处理无响应时，才使用请求改写或主机拦截。除非抓包证明应用会将某个业务错误响应当成无广告结果，否则不要伪造业务错误码。
+4. **制作最小化的模拟响应或改写。** 以抓包中的响应结构和成功码为依据。本地模拟响应应提供有效状态码及 `Content-Type`；不要把授权信息、Cookie、设备标识等敏感内容复制到模拟数据中。若用户要求清空 `payload.row` 等字段，只修改该字段。本地模拟不会请求服务端，因此其他固定样本字段无法保持实时。
+5. **编写插件规则。** 在 `[Script]` 下添加主机、路径和方法都尽量精确的规则，引用 GitHub Raw 脚本地址，并设置易识别的标签和合理超时。按 Loon 语法正确转义正则表达式。将所有被拦截的 HTTPS 主机加入 `[Mitm]`；HTTPS 请求拦截需要安装并信任 Loon MitM 证书，并对相应主机启用 HTTPS 解密。
+6. **更新文档和仓库。** 说明插件处理哪些接口、模拟或改写哪些字段、哪些模拟元数据是固定值，以及 MitM 的要求。保持脚本文件名、规则标签和 Raw 地址一致。用户要求发布时，通过可用的 GitHub 集成更新仓库，并使用简洁的提交说明。
+7. **完成提交前检查。** 检查插件语法、主机/路径/方法匹配、JSON 有效性、脚本所有结束路径，以及文件中是否包含抓包凭据。提交后从仓库重新读取文件确认内容。除非确实在 Loon 中运行验证，否则不要声称完成了运行时测试。
 
-## Troubleshoot when ads still appear
+## 广告仍然出现时的排查方法
 
-- Confirm the plugin is enabled and refreshed from its current URL.
-- Check Loon logs for the rule tag. No match usually points to a different host, path, method, redirect, or query pattern.
-- Confirm the hostname is in `[Mitm]`, the certificate is trusted, and HTTPS decryption is enabled.
-- Look for cached content, another ad endpoint, image/video delivery, or promotional data embedded in a broader configuration response. Add rules only after identifying them in a capture.
-- Ask for a fresh sanitized request/response capture when evidence is incomplete. Remove bearer tokens, cookies, user IDs, license plates, and device identifiers before sharing or committing captures.
+- 确认插件已启用，并从当前订阅地址刷新。
+- 查看 Loon 日志中对应规则标签是否命中。未命中通常说明主机、路径、方法、重定向或查询参数匹配不完整。
+- 确认主机已加入 `[Mitm]`、证书已信任，并已启用 HTTPS 解密。
+- 检查是否存在缓存内容、其他广告接口、图片/视频资源请求，或嵌在更大配置响应中的推广数据。先从抓包确认，再新增规则。
+- 证据不足时，请用户提供新的脱敏请求/响应抓包。分享或提交前移除 Bearer Token、Cookie、用户 ID、车牌号和设备标识。
 
-## Response-script safeguards
+## Response Script 注意事项
 
-- Verify every expected JSON object/array before changing it.
-- Preserve all unrelated keys and values; omit or recalculate `Content-Length` when the body changes.
-- On an unknown response shape or parse failure, pass the original response through unchanged.
-- Keep logs generic; never log full URLs with sensitive query values or request headers.
+- 修改前验证预期的 JSON 对象和数组确实存在。
+- 保留所有无关字段和值；修改响应体后移除或重新计算 `Content-Length`。
+- 遇到未知响应结构或 JSON 解析失败时，原样放行服务端响应。
+- 日志保持通用，不记录完整敏感查询参数或请求头。
 
-## Request-mock safeguards
+## Request Script 本地模拟注意事项
 
-- Use a request rule for early interception and return a complete response object from the script.
-- Match the response envelope the app expects, including its success code and nested object types.
-- Do not promise that live metadata is preserved by a static mock. Reuse captured non-ad fields only when appropriate, and document that counts, sequence numbers, server node names, or timestamps may be stale.
-- Keep the URL condition as specific as possible so unrelated API calls continue upstream.
+- 使用请求规则在上游请求发出前拦截，并从脚本返回完整 HTTP 响应对象。
+- 响应信封结构、成功码及嵌套对象类型应符合应用预期。
+- 不要声称静态模拟数据保留了实时元数据。只有适用时才复用抓包中的非广告字段，并说明总数、序列号、服务节点或时间戳可能已经过期。
+- 尽量精确匹配 URL，避免其他 API 请求被错误模拟；未匹配的请求应继续正常访问服务端。
 
-## Example: return an empty list locally
+## 示例：本地返回空列表
 
-For a captured successful JSON response with `payload.row`:
+对于抓包中包含 `payload.row` 的成功 JSON 响应：
 
 ```js
 const mock = {
@@ -62,4 +62,4 @@ $done({
 });
 ```
 
-Copy the actual required envelope and paging fields from a sanitized capture; the example is illustrative, not a universal API schema.
+从脱敏抓包中复制实际所需的响应信封和分页字段。以上示例仅用于说明，不代表所有接口都使用相同结构。
