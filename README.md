@@ -34,3 +34,7 @@ https://raw.githubusercontent.com/ng-life/LoonRules/main/4Pyun.plugin
 脚本：[广告拉取响应](https://github.com/ng-life/LoonRules/blob/main/pp-parking-ad.js)、[活动列表本地模拟](https://github.com/ng-life/LoonRules/blob/main/pp-parking-event-list.js)。
 
 参考：[Loon 插件文档](https://nsloon.app/docs/Plugin/) 和 [MitM 指南](https://nsloon.app/docs/MitM/)。
+
+## 可复用 Skill
+
+[loon-adblock-plugin](https://github.com/ng-life/LoonRules/tree/main/skills/loon-adblock-plugin) 汇总了从抓包识别广告接口、选择 Request/Response Script、配置 MitM 到检查和发布插件的完整流程。
