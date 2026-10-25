@@ -7,8 +7,8 @@
 #!tag = 去广告
 
 [Script]
-request if ${request.method} == "POST" && ${url} ~= /^https?:\\/\\/ad-api\\.4pyun\\.com\\/gate\\/1\\.0\\/adverting\\/advertising\\/pull(?:\\?.*)?$/i then script("https://raw.githubusercontent.com/ng-life/LoonRules/main/pp-parking-ad.js") with tag="PP 停车去广告", timeout=20
-request if ${request.method} == "GET" && ${url} ~= /^https?:\\/\\/user-api\\.4pyun\\.com\\/rest\\/2\\.0\\/bonus\\/user\\/event\\/list(?:\\?.*)?$/i then script("https://raw.githubusercontent.com/ng-life/LoonRules/main/pp-parking-event-list.js") with tag="PP 停车去广告-活动列表", timeout=20
+request if ${request.method} == "POST" && ${url} ~= /^https?:\/\/ad-api\.4pyun\.com\/gate\/1\.0\/adverting\/advertising\/pull(?:\?.*)?$/i then script("https://raw.githubusercontent.com/ng-life/LoonRules/main/pp-parking-ad.js") with tag="PP 停车去广告", timeout=20
+request if ${request.method} == "GET" && ${url} ~= /^https?:\/\/user-api\.4pyun\.com\/rest\/2\.0\/bonus\/user\/event\/list(?:\?.*)?$/i then script("https://raw.githubusercontent.com/ng-life/LoonRules/main/pp-parking-event-list.js") with tag="PP 停车去广告-活动列表", timeout=20
 
 [Mitm]
 hostname = ad-api.4pyun.com, user-api.4pyun.com
