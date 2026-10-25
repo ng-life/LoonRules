@@ -1,33 +1,29 @@
-// Clear only payload.row in the successful event-list JSON response.
-try {
-  const responseBody = JSON.parse($response.body);
-  const rows = responseBody &&
-    responseBody.payload &&
-    responseBody.payload.row;
-
-  if (Array.isArray(rows)) {
-    responseBody.payload.row = [];
-
-    const headers = {};
-    const originalHeaders = $response.headers || {};
-    Object.keys(originalHeaders).forEach((name) => {
-      if (name.toLowerCase() !== "content-length") {
-        headers[name] = originalHeaders[name];
-      }
-    });
-
-    console.log("[PP 停车去广告] bonus/user/event/list: payload.row 已清空");
-    $done({
-      status: $response.status,
-      headers: headers,
-      body: JSON.stringify(responseBody)
-    });
-  } else {
-    // Leave unexpected response shapes untouched.
-    $done({});
+// Return a local success response before the request reaches the upstream server.
+// Based on the captured event-list response; only payload.row is emptied.
+const mockResponse = {
+  code: "1001",
+  seqno: "8dd9012baaf8211bde7751e202a769f1",
+  data_node: "CN-South/HS3-2",
+  time_cost: 18,
+  payload: {
+    paging_header: {
+      total_count: 1853,
+      page_index: 1,
+      page_size: 50,
+      page_count: 38,
+      paging_timestamp: "1970-01-01T00:00:00Z"
+    },
+    row: []
   }
-} catch (error) {
-  // Keep the original response if the body is not valid JSON.
-  console.log("[PP 停车去广告] event-list JSON 解析失败，保留原响应");
-  $done({});
-}
+};
+
+console.log("[PP 停车去广告] bonus/user/event/list: 已本地模拟空 row 响应");
+$done({
+  response: {
+    status: 200,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8"
+    },
+    body: JSON.stringify(mockResponse)
+  }
+});
