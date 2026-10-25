@@ -16,7 +16,7 @@ https://raw.githubusercontent.com/ng-life/LoonRules/main/DIRECT.list, policy=DIR
 https://raw.githubusercontent.com/ng-life/LoonRules/main/RejectDict.list, policy=REJECT_DICT, tag=RejectDict, enabled=true
 ```
 
-## 插件
+## PP 停车去广告插件
 
 在 Loon 中添加以下插件地址：
 
@@ -24,6 +24,12 @@ https://raw.githubusercontent.com/ng-life/LoonRules/main/RejectDict.list, policy
 https://raw.githubusercontent.com/ng-life/LoonRules/main/4Pyun.plugin
 ```
 
-插件根据抓包识别到的广告拉取接口，拦截专用广告域名 `ad-api.4pyun.com`。会员、奖励等业务接口使用的 `user-api.4pyun.com` 不受影响。
+插件通过请求脚本拦截 `POST /gate/1.0/adverting/advertising/pull`，模拟 API 抓包中出现过的 `code=1002` 无广告 JSON 响应。它不拦截广告回执接口，也不影响 `user-api.4pyun.com` 的会员、奖励等业务接口。
+
+插件声明了 `ad-api.4pyun.com` 的 MitM 域名。首次使用需在 Loon 中安装并信任 MitM 证书，并启用 HTTPS 解密。
+
+脚本：[pp-parking-ad.js](https://github.com/ng-life/LoonRules/blob/main/pp-parking-ad.js)
+
+参考：[Loon 插件文档](https://nsloon.app/docs/Plugin/) 和 [MitM 指南](https://nsloon.app/docs/MitM/)。
 
 参考：[Loon 规则文档](https://nsloon.app/docs/category/%E8%A7%84%E5%88%99/)。
