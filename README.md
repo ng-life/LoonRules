@@ -24,12 +24,13 @@ https://raw.githubusercontent.com/ng-life/LoonRules/main/RejectDict.list, policy
 https://raw.githubusercontent.com/ng-life/LoonRules/main/4Pyun.plugin
 ```
 
-插件通过请求脚本拦截 `POST /gate/1.0/adverting/advertising/pull`，模拟 API 抓包中出现过的 `code=1002` 无广告 JSON 响应。它不拦截广告回执接口，也不影响 `user-api.4pyun.com` 的会员、奖励等业务接口。
+插件处理两类接口：
 
-插件声明了 `ad-api.4pyun.com` 的 MitM 域名。首次使用需在 Loon 中安装并信任 MitM 证书，并启用 HTTPS 解密。
+- 广告拉取接口返回抓包中出现过的 `code=1002` 无广告响应。
+- `GET /rest/2.0/bonus/user/event/list` 保留原响应字段，只将 `payload.row` 改为空数组。
 
-脚本：[pp-parking-ad.js](https://github.com/ng-life/LoonRules/blob/main/pp-parking-ad.js)
+插件声明了 `ad-api.4pyun.com` 和 `user-api.4pyun.com` 的 MitM 域名。首次使用需在 Loon 中安装并信任 MitM 证书，并启用 HTTPS 解密。
+
+脚本：[广告拉取响应](https://github.com/ng-life/LoonRules/blob/main/pp-parking-ad.js)、[活动列表响应](https://github.com/ng-life/LoonRules/blob/main/pp-parking-event-list.js)。
 
 参考：[Loon 插件文档](https://nsloon.app/docs/Plugin/) 和 [MitM 指南](https://nsloon.app/docs/MitM/)。
-
-参考：[Loon 规则文档](https://nsloon.app/docs/category/%E8%A7%84%E5%88%99/)。
