@@ -1,4 +1,4 @@
 interface:
-  display_name: "Loon Ad Block Plugin"
-  short_description: "Build Loon ad-block plugins from captured API traffic"
-  default_prompt: "Use $loon-adblock-plugin to analyze captured traffic and build a Loon ad-blocking plugin."
+  display_name: "Loon 去广告插件"
+  short_description: "根据抓包制作和排查 Loon 去广告插件"
+  default_prompt: "使用 $loon-adblock-plugin 分析抓包并制作 Loon 去广告插件。"
