@@ -1,0 +1,10 @@
+#!name = 4Pyun 去广告
+#!desc = 屏蔽抓包确认的 4Pyun 广告投放接口
+#!author = ng-life
+#!homepage = https://github.com/ng-life/LoonRules
+#!date = 2026-10-25
+#!tag = 去广告
+
+[Rule]
+# 广告拉取及回执接口所在的专用广告域名
+DOMAIN,ad-api.4pyun.com,REJECT
